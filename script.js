@@ -25,10 +25,8 @@ function makePageForEpisodes(episodeList) {
     const title = document.createElement("div");
     const displayList = document.getElementById("displayList");
     console.log(displayList);
-    title.textContent = episodeList[episode].name + " - "+ seasonEpi;
-    displayList.appendChild(title); 
-
-    
+    title.textContent = episodeList[episode].name + " - " + seasonEpi;
+    displayList.appendChild(title);
 
     const image = document.createElement("img");
     console.log(image);
@@ -38,8 +36,16 @@ function makePageForEpisodes(episodeList) {
     //console.log(summary);
 
     displayList.innerHTML += episodeList[episode].summary;
-
-    
   }
+const foot = document.getElementById("foot");
+const link = document.createElement("a");
+link.innerHTML = "Licencing";
+link.href = "https://www.tvmaze.com/api#licensing";
+link.title = "https://www.tvmaze.com/api#licensing";
+foot.appendChild(link);
+console.log(foot.innerHTML);
+console.log(foot.innerText);
 }
+
+
 window.onload = setup;
