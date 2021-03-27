@@ -1,15 +1,48 @@
 //You can edit ALL of the code here
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+
+const allEpisodes = getAllEpisodes();
+makePageForEpisodes(allEpisodes);
+
+
+
+  let epiFilter;
+  
+  const input = document.getElementById('input')
+    input.addEventListener("input",(event) => {
+     
+
+       let searchValue = event.target.value.toLowerCase();
+
+       let episodeList = getAllEpisodes();
+
+       let filteredEpisodes = episodeList.filter((episode) => {
+         if (
+           episode.name.toLowerCase().includes(searchValue) ||
+           episode.summary.toLowerCase().includes(searchValue)
+         ) {
+           return episode;
+         }
+       });
+       showFiltered(filteredEpisodes);
+     //  epiFilter = makePageForEpisodes(filteredEpisodes);
+       console.log(filteredEpisodes);
+    })
+  
+  
+}
+
+let showFiltered = function(filteredEpisodes){
+  console.log(filteredEpisodes)
 }
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 
+
   for (let episode in episodeList) {
-    console.log(episodeList[episode].name);
+    
     let episodeNum = episodeList[episode].number;
     let seasonNum = episodeList[episode].season;
 
@@ -20,32 +53,38 @@ function makePageForEpisodes(episodeList) {
       seasonNum = `0` + seasonNum.toString();
     }
     let seasonEpi = `S${seasonNum}E${episodeNum}`;
-    console.log(seasonEpi);
-
+    
+    
     const title = document.createElement("div");
-    const displayList = document.getElementById("displayList");
-    console.log(displayList);
+    
+   
     title.textContent = episodeList[episode].name + " - " + seasonEpi;
-    displayList.appendChild(title);
+    //displayList.appendChild(title);
 
     const image = document.createElement("img");
-    console.log(image);
+    
     image.src = episodeList[episode].image.medium;
-    displayList.appendChild(image);
+    //displayList.appendChild(image);
 
-    //console.log(summary);
+    
+   // displayList.innerHTML += episodeList[episode].summary;
 
-    displayList.innerHTML += episodeList[episode].summary;
+    const container = document.createElement("div");
+    container.id = episodeList[episode].id;
+    container.append(title, image);
+    container.innerHTML += episodeList[episode].summary;
+    displayList.appendChild(container);
   }
+
+
+}
 const foot = document.getElementById("foot");
 const link = document.createElement("a");
 link.innerHTML = "Licencing";
 link.href = "https://www.tvmaze.com/api#licensing";
 link.title = "https://www.tvmaze.com/api#licensing";
 foot.appendChild(link);
-console.log(foot.innerHTML);
-console.log(foot.innerText);
-}
+
 
 
 window.onload = setup;
