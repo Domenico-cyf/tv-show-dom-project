@@ -42,32 +42,46 @@ function setup() {
     //makePageForEpisodes(filteredEpisodes);
   });
 
-  // const rootElem = document.getElementById("root");
-  // rootElem.textContent = `Got ${filteredEpisodes.length} episode(s)`;
-  // let episodeData = episodeList;
-  // if (searchValue) {
-  //   episodeData = filteredEpisodes;
-  // }
-  // const input = document.getElementById("input");
-  // input.addEventListener("input", (event) => {
-  //   let searchValue = event.target.value.toLowerCase();
 
-  //   //let episodeList = getAllEpisodes();
+  
 
-  //   let filteredEpisodes = allEpisodes.filter((episode) => {
-  //     if (
-  //       episode.name.toLowerCase().includes(searchValue) ||
-  //       episode.summary.toLowerCase().includes(searchValue)
-  //     ) {
-  //       return episode;
-  //     }
-  //   });
+ 
+  
+  const optionHTML = document.getElementById("select");
 
-  //   console.log(filteredEpisodes);
-  //   makePageForEpisodes(filteredEpisodes);
+  let optionEl = document.createElement("option");
+  console.log(optionEl);
+  optionHTML.appendChild(optionEl);
+  optionEl.innerHTML = "All Episodes";
+function episodeFun(episodeNum, seasonNum) {
+    if (episodeNum < 10) {
+      episodeNum = `0` + episodeNum.toString();
+    }
+    if (seasonNum < 10) {
+      seasonNum = `0` + seasonNum.toString();
+    }
+    return `S${seasonNum}E${episodeNum}`;
+  }
 
-  // });
-}
+  for (let element of allEpisodes) {
+    let optionEl = document.createElement("option");
+    console.log(optionEl);
+    optionHTML.appendChild(optionEl);
+    optionEl.innerHTML = element.name + " - " + episodeFun(element.season , element.number);
+  }
+  
+
+ 
+  }
+
+
+
+
+
+
+
+
+
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
@@ -112,5 +126,16 @@ link.innerHTML = "Licencing";
 link.href = "https://www.tvmaze.com/api#licensing";
 link.title = "https://www.tvmaze.com/api#licensing";
 foot.appendChild(link);
-
+ function myFunction() {
+   const allEpisodes = getAllEpisodes();
+   var selection = document.getElementById("select").value;
+   console.log(selection);
+   if (selection == "All Episodes") {
+     for (let episode in allEpisodes) {
+       let singleId = document.getElementById(allEpisodes[episode].id);
+       
+       singleId.className = "show";
+     }
+   } 
+ }
 window.onload = setup;
