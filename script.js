@@ -63,7 +63,7 @@ function setup() {
     console.log(optionEl);
     optionHTML.appendChild(optionEl);
     optionEl.innerHTML =
-      element.name + " - " + episodeFun(element.season, element.number);
+      element.name + " - " + episodeFun(element.number, element.season);
   }
 }
 
@@ -111,7 +111,7 @@ link.href = "https://www.tvmaze.com/api#licensing";
 link.title = "https://www.tvmaze.com/api#licensing";
 foot.appendChild(link);
 
-function myFunction(event) {
+function myFunction() {
   displayList.innerText = "";
   const allEpisodes = getAllEpisodes();
   let selection = document.getElementById("select").value;
