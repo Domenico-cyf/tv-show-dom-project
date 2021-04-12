@@ -18,7 +18,7 @@ function setup() {
         return episode;
       }
     });
-    
+
     let idArr = filteredEpisodes.map((element) => element.id);
     console.log(idArr);
 
@@ -42,18 +42,13 @@ function setup() {
     //makePageForEpisodes(filteredEpisodes);
   });
 
-
-  
-
- 
-  
   const optionHTML = document.getElementById("select");
 
   let optionEl = document.createElement("option");
   console.log(optionEl);
   optionHTML.appendChild(optionEl);
   optionEl.innerHTML = "All Episodes";
-function episodeFun(episodeNum, seasonNum) {
+  function episodeFun(episodeNum, seasonNum) {
     if (episodeNum < 10) {
       episodeNum = `0` + episodeNum.toString();
     }
@@ -67,21 +62,10 @@ function episodeFun(episodeNum, seasonNum) {
     let optionEl = document.createElement("option");
     console.log(optionEl);
     optionHTML.appendChild(optionEl);
-    optionEl.innerHTML = element.name + " - " + episodeFun(element.season , element.number);
+    optionEl.innerHTML =
+      element.name + " - " + episodeFun(element.number, element.season);
   }
-  
-
- 
-  }
-
-
-
-
-
-
-
-
-
+}
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
@@ -126,16 +110,24 @@ link.innerHTML = "Licencing";
 link.href = "https://www.tvmaze.com/api#licensing";
 link.title = "https://www.tvmaze.com/api#licensing";
 foot.appendChild(link);
- function myFunction() {
-   const allEpisodes = getAllEpisodes();
-   var selection = document.getElementById("select").value;
-   console.log(selection);
-   if (selection == "All Episodes") {
-     for (let episode in allEpisodes) {
-       let singleId = document.getElementById(allEpisodes[episode].id);
-       
-       singleId.className = "show";
-     }
-   } 
- }
+
+function myFunction() {
+  displayList.innerText = "";
+  const allEpisodes = getAllEpisodes();
+  let selection = document.getElementById("select").value;
+
+  if (selection === "All Episodes") {
+    makePageForEpisodes(allEpisodes);
+    return;
+  }
+  let selectedEpi = allEpisodes.filter((episode) => {
+    if (
+      episode.name.toLowerCase() === selection.split(" - ")[0].toLowerCase()
+    ) {
+      return episode;
+    }
+  });
+  console.log(selectedEpi);
+  makePageForEpisodes(selectedEpi);
+}
 window.onload = setup;
