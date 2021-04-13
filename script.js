@@ -1,7 +1,21 @@
 //You can edit ALL of the code here
 function setup() {
-  const allEpisodes = getAllEpisodes();
+  const allEpisodes = fetchEpisodes() //getAllEpisodes();
   makePageForEpisodes(allEpisodes);
+console.log(allEpisodes)
+  function fetchEpisodes(){
+    fetch("https://api.tvmaze.com/shows/82/episodes")
+      .then(response => {
+        console.log(response);
+        if(!response.ok) {
+          throw Error("ERROR");
+        }
+        return response.json();
+      }).then(data=> {
+        console.log(data)
+      }).catch(error => {console.log(error)});
+  }
+fetchEpisodes()
 
   const input = document.getElementById("input");
   let searchValue = "";
@@ -20,14 +34,15 @@ function setup() {
     });
     
     let idArr = filteredEpisodes.map((element) => element.id);
-    console.log(idArr);
+    
+    
 
     let idArrNoShow = allEpisodes.filter((element) => {
       return !idArr.includes(element.id);
     });
 
     idArrNoShow = idArrNoShow.map((element) => element.id);
-    console.log(idArrNoShow);
+    
 
     for (let episode in idArrNoShow) {
       let singleId = document.getElementById(idArrNoShow[episode]);
@@ -43,10 +58,7 @@ function setup() {
   });
 
 
-  
 
- 
-  
   const optionHTML = document.getElementById("select");
 
   let optionEl = document.createElement("option");
@@ -73,14 +85,6 @@ function episodeFun(episodeNum, seasonNum) {
 
  
   }
-
-
-
-
-
-
-
-
 
 
 function makePageForEpisodes(episodeList) {
